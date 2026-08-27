@@ -28,3 +28,40 @@ ul {
     object-fit: cover;
     border-radius: 2px;
 }
+
+.newsletter {
+    text-align: right;
+    margin-top: 2em;
+}
+.newsletter p {
+    margin-bottom: 0.5em;
+}
+.newsletter form {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+}
+.newsletter input[type="email"] {
+    border: none;
+    border-bottom: 1px solid black;
+    background: transparent;
+    padding: 0.3em 0;
+    font-family: inherit;
+    font-size: 1em;
+    text-align: right;
+    width: 200px;
+}
+.newsletter input[type="email"]:focus {
+    outline: none;
+}
+.newsletter input[type="submit"] {
+    border: 1px solid black;
+    background: none;
+    padding: 0.3em 1em;
+    font-family: inherit;
+    cursor: pointer;
+}
+.newsletter input[type="submit"]:hover {
+    background: black;
+    color: white;
+}

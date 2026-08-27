@@ -1,32 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head> 
+    <head>
         <meta charset="UTF-8" />
-        <title>newsletter - Keita Kasai</title>
+        <title>Newsletter - Keita Kasai</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>
-            body {
-                text-align: right;
-            }
-            a {
-                color: black;
-            }
-            ul {
-                list-style: none;
-            }
-        </style>
+        <link rel="stylesheet" href="../CSS/style.css">
     </head>
     <body>
         <main>
-            <section class="intro">
-            <h1>newsletter</h1>
-            
-            <p>Nothing here yet. Check back soon.</p>
-
-            <ul>
-                <li><a href="../index.html">back to home</a></li>
-            </ul>
-        </section>
+            <div class="newsletter">
+                <p>Subscribe for updates.</p>
+                <form
+                    action="https://buttondown.com/api/emails/embed-subscribe/keita"
+                    method="post"
+                    class="embeddable-buttondown-form"
+                >
+                    <input type="email" name="email" id="bd-email" placeholder="your email" required />
+                    <input type="submit" value="Subscribe" />
+                </form>
+            </div>
         </main>
     </body>
 </html>
