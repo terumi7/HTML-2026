@@ -1,0 +1,30 @@
+/* 共通ベーススタイル */
+body {
+    text-align: right;
+    font-family: Georgia, serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+a {
+    color: black;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Photos ギャラリー */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    text-align: left;
+    margin: 24px 0;
+}
+.gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 2px;
+}
