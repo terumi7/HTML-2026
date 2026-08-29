@@ -8,218 +8,176 @@
   <title>掲示板 — Keita Kasai</title>
 
   <style>
-
     body {
-      margin: 28px;
-      background: white;
-      color: black;
-      font-size: 16px;
+        margin: 28px;
+        background: white;
+        color: black;
+        font-size: 16px;
     }
-
 
     main {
-      width: 520px;
-      max-width: 100%;
-      margin-left: auto;
+        width: 520px;
+        max-width: 100%;
+        margin-left: auto;
     }
-
 
     h1 {
-      margin: 0 0 12px 0;
-      font-size: 48px;
-      font-weight: normal;
-      text-align: right;
+        margin: 0 0 12px 0;
+        font-size: 44px;
+        font-weight: normal;
+        text-align: right;
     }
-
 
     .intro {
-      text-align: right;
-      font-size: 14px;
-      margin-bottom: 28px;
+        text-align: right;
+        font-size: 14px;
+        margin-bottom: 28px;
     }
-
 
     .top-line {
-      border: 0;
-      border-top: 2px solid black;
-      margin: 0 0 30px 0;
+        border: 0;
+        border-top: 2px solid black;
+        margin: 0 0 30px 0;
     }
-
 
     .post {
-      padding-bottom: 28px;
-      margin-bottom: 28px;
-      border-bottom: 1px dotted black;
+        padding-bottom: 28px;
+        margin-bottom: 28px;
+        border-bottom: 1px dotted black;
     }
-
 
     .post:last-child {
-      border-bottom: none;
+        border-bottom: none;
     }
-
 
     .post-number {
-      font-size: 14px;
-      margin-bottom: 12px;
+        font-size: 14px;
+        margin-bottom: 12px;
     }
-
 
     .post-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 12px;
     }
-
 
     .post-name {
-      font-size: 17px;
+        font-size: 17px;
     }
-
 
     .post-date {
-      font-size: 14px;
+        font-size: 14px;
     }
-
 
     .post-message {
-      white-space: pre-wrap;
-      line-height: 1.6;
-      font-size: 17px;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        font-size: 17px;
+        padding-left: 5px;
     }
-
 
     .bottom-line {
-      border: 0;
-      border-top: 2px solid black;
-      margin: 10px 0 35px 0;
+        border: 0;
+        border-top: 2px solid black;
+        margin: 10px 0 35px 0;
     }
-
 
     .write-title {
-      text-align: right;
-      font-size: 22px;
-      margin-bottom: 30px;
+        text-align: right;
+        font-size: 22px;
+        margin-bottom: 30px;
     }
-
 
     form {
-      width: 100%;
+        width: 100%;
     }
-
 
     .field {
-      margin-bottom: 24px;
+        margin-bottom: 24px;
     }
-
 
     label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 7px;
-      font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 7px;
+        font-size: 14px;
     }
-
 
     input,
     textarea {
-      display: block;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px;
 
-      width: 100%;
-      box-sizing: border-box;
+        font-family: inherit;
+        font-size: 16px;
 
-      padding: 6px;
+        color: black;
+        background: white;
 
-      font-size: 16px;
-
-      color: black;
-      background: white;
-
-      border: 1px solid black;
-      border-radius: 0;
-
-      outline: none;
+        border: 1px solid black;
+        border-radius: 0;
+        outline: none;
     }
-
-
-    input:focus,
-    textarea:focus {
-      outline: 1px solid black;
-    }
-
 
     textarea {
-      height: 120px;
-      resize: vertical;
+        height: 120px;
+        resize: vertical;
     }
-
 
     .submit-area {
-      text-align: right;
-      margin-top: 5px;
+        text-align: right;
+        margin-top: 5px;
     }
-
 
     button {
-      font-size: 16px;
+        font-family: inherit;
+        font-size: 16px;
+        padding: 4px 14px;
 
-      padding: 4px 14px;
+        color: black;
+        background: white;
 
-      color: black;
-      background: white;
+        border: 1px solid black;
+        border-radius: 0;
 
-      border: 1px solid black;
-      border-radius: 0;
-
-      cursor: pointer;
+        cursor: pointer;
     }
-
-
-    button:hover {
-      background: black;
-      color: white;
-    }
-
 
     #status {
-      margin-top: 12px;
-      text-align: right;
-      font-size: 14px;
+        margin-top: 12px;
+        text-align: right;
+        font-size: 14px;
     }
-
 
     .footer {
-      margin-top: 70px;
-      padding-bottom: 30px;
-
-      text-align: right;
-      font-size: 14px;
+        margin-top: 70px;
+        padding-bottom: 30px;
+        text-align: right;
+        font-size: 14px;
     }
-
 
     .footer a {
-      color: black;
-      text-decoration: underline;
+        color: black;
+        text-decoration: underline;
     }
-
 
     @media (max-width: 600px) {
+        body {
+            margin: 20px;
+        }
 
-      body {
-        margin: 20px;
-      }
+        main {
+            width: 100%;
+        }
 
-      main {
-        width: 100%;
-      }
-
-      h1 {
-        font-size: 40px;
-      }
-
+        h1 {
+            font-size: 40px;
+        }
     }
-
-  </style>
+</style>
 </head>
 
 
