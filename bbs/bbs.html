@@ -142,25 +142,32 @@
 
 
   async function loadPosts() {
+  try {
+    const url =
+      `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.asc`;
 
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.asc`,
-      {
-        headers: {
-          "apikey": SUPABASE_PUBLISHABLE_KEY,
-         }`
-        }
+    console.log("URL:", url);
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_PUBLISHABLE_KEY
       }
-    );
+    });
+
+    console.log("status:", response.status);
+
+    const text = await response.text();
+
+    console.log("response:", text);
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      throw new Error(text);
     }
 
-    const posts = await response.json();
+    const posts = JSON.parse(text);
 
-    const container =
-      document.getElementById("posts");
+    const container = document.getElementById("posts");
 
     if (posts.length === 0) {
       container.innerHTML = "no posts yet.";
@@ -168,122 +175,49 @@
     }
 
     container.innerHTML = posts.map(post => {
-
       const date = new Date(post.created_at);
-
-      const dateString =
-        date.getFullYear() +
-        "." +
-        String(date.getMonth() + 1).padStart(2, "0") +
-        "." +
-        String(date.getDate()).padStart(2, "0");
 
       return `
         <div class="post">
-
           <div class="post-header">
             ${escapeHTML(post.name)}
             &nbsp;
-            ${dateString}
+            ${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}
           </div>
 
           <div class="post-message">
             ${escapeHTML(post.message)}
           </div>
-
         </div>
       `;
-
     }).join("");
-  }
 
-
-  document
-    .getElementById("form")
-    .addEventListener("submit", async function(event) {
-
-      event.preventDefault();
-
-      const name =
-        document.getElementById("name").value.trim();
-
-      const message =
-        document.getElementById("message").value.trim();
-
-      const status =
-        document.getElementById("status");
-
-      if (!name || !message) {
-        return;
-      }
-
-      status.textContent = "posting...";
-
-
-      try {
-
-        const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/posts`,
-          {
-            method: "POST",
-
-            headers: {
-              "apikey": SUPABASE_PUBLISHABLE_KEY,
-              "Content-Type":
-                "application/json",
-              "Prefer":
-                "return=minimal"
-            },
-
-            body: JSON.stringify({
-              name: name,
-              message: message
-            })
-          }
-        );
-
-
-        if (!response.ok) {
-          throw new Error(await response.text());
-        }
-
-
-        document.getElementById("form").reset();
-
-        status.textContent = "";
-
-        await loadPosts();
-
-      } catch (error) {
-
-        console.error(error);
-
-        status.textContent =
-          "could not post.";
-
-      }
-
-    });
-
-
-  function escapeHTML(text) {
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
-  }
-
-
-  loadPosts().catch(error => {
-
-    console.error(error);
+  } catch (error) {
+    console.error("BBS ERROR:", error);
 
     document.getElementById("posts").textContent =
       "could not load posts.";
+  }
+}
 
-  });
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+
+loadPosts().catch(error => {
+
+  console.error(error);
+
+  document.getElementById("posts").textContent =
+    "could not load posts.";
+
+});
 
 </script>
 
