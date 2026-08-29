@@ -48,44 +48,48 @@
         }
 
         input,
-textarea {
-    font: inherit;
-    width: 400px;
-    max-width: 100%;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    appearance: none;
-    border: 1px solid black;
-    border-radius: 0;
-    padding: 0.4em;
-    background: white;
-}
+        textarea {
+            font: inherit;
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+            border: 1px solid black;
+            border-radius: 0;
+            padding: 0.4em;
+            background: white;
+        }
 
-input:focus,
-textarea:focus {
-    outline: none;
-    border: 1px solid black;
-}
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border: 1px solid black;
+        }
 
         textarea {
             height: 100px;
         }
 
         button {
-    font: inherit;
-    -webkit-appearance: none;
-    appearance: none;
-    background: none;
-    border: 1px solid black;
-    color: black;
-    padding: 0.3em 1em;
-    cursor: pointer;
-}
+            font: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+            background: none;
+            border: 1px solid black;
+            color: black;
+            padding: 0.3em 1em;
+            cursor: pointer;
+        }
 
-button:hover {
-    background: black;
-    color: white;
-}
+        button:hover {
+            background: black;
+            color: white;
+        }
+
+        #load-more-container {
+            margin-top: 30px;
+        }
     </style>
 </head>
 
@@ -99,6 +103,10 @@ button:hover {
 
         <div id="posts">
             loading...
+        </div>
+
+        <div id="load-more-container" style="display: none;">
+            <button type="button" id="load-more">load more</button>
         </div>
 
     </section>
@@ -158,11 +166,16 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_JaFVAjTvi4r0hIFNRvZWYA_c5xz7lXQ";
 
+const PAGE_SIZE = 10;
+
+let allPosts = [];
+let visibleCount = PAGE_SIZE;
+
 
 async function loadPosts() {
 
     const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.asc`,
+        `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.desc`,
         {
             method: "GET",
 
@@ -182,25 +195,41 @@ async function loadPosts() {
     }
 
 
-    const posts =
+    allPosts =
         await response.json();
 
+
+    renderPosts();
+}
+
+
+function renderPosts() {
 
     const container =
         document.getElementById("posts");
 
 
-    if (posts.length === 0) {
+    if (allPosts.length === 0) {
 
         container.textContent =
             "no posts yet.";
+
+        document
+            .getElementById("load-more-container")
+            .style.display = "none";
 
         return;
     }
 
 
+    const total = allPosts.length;
+
+    const toShow =
+        allPosts.slice(0, visibleCount);
+
+
     container.innerHTML =
-        posts.map((post, index) => {
+        toShow.map((post, index) => {
 
             const date =
                 new Date(post.created_at);
@@ -228,11 +257,15 @@ async function loadPosts() {
                 ).padStart(2, "0");
 
 
+            const number =
+                total - index;
+
+
             return `
                 <div class="post">
 
                     <div class="post-header">
-                        ${String(index + 1).padStart(3, "0")}.
+                        ${String(number).padStart(3, "0")}.
                         ${escapeHTML(post.name)}
                         -
                         ${dateString}
@@ -247,7 +280,28 @@ async function loadPosts() {
             `;
 
         }).join("");
+
+
+    const loadMoreContainer =
+        document.getElementById("load-more-container");
+
+    if (visibleCount < total) {
+        loadMoreContainer.style.display = "block";
+    } else {
+        loadMoreContainer.style.display = "none";
+    }
 }
+
+
+document
+    .getElementById("load-more")
+    .addEventListener(
+        "click",
+        function() {
+            visibleCount += PAGE_SIZE;
+            renderPosts();
+        }
+    );
 
 
 
@@ -337,6 +391,8 @@ document
                 status.textContent =
                     "";
 
+
+                visibleCount = PAGE_SIZE;
 
                 await loadPosts();
 
