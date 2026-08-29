@@ -1,268 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>bbs - Keita Kasai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>掲示板 — Keita Kasai</title>
-
-  <style>
-    body {
-        margin: 28px;
-        background: white;
-        color: black;
-        font-size: 16px;
-    }
-
-    main {
-        width: 520px;
-        max-width: 100%;
-        margin-left: auto;
-    }
-
-    h1 {
-        margin: 0 0 12px 0;
-        font-size: 36px;
-        font-weight: normal;
-        text-align: right;
-    }
-
-    .intro {
-        text-align: right;
-        font-size: 14px;
-        margin-bottom: 28px;
-    }
-
-    .top-line {
-        border: 0;
-        border-top: 2px solid black;
-        margin: 0 0 30px 0;
-    }
-
-    .post {
-        padding-bottom: 28px;
-        margin-bottom: 28px;
-        border-bottom: 1px dotted black;
-    }
-
-    .post:last-child {
-        border-bottom: none;
-    }
-
-    .post-number {
-        font-size: 14px;
-        margin-bottom: 12px;
-    }
-
-    .post-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 12px;
-    }
-
-    .post-name {
-        font-size: 17px;
-    }
-
-    .post-date {
-        font-size: 14px;
-    }
-
-    .post-message {
-        white-space: pre-wrap;
-        line-height: 1.6;
-        font-size: 17px;
-        padding-left: 5px;
-    }
-
-    .bottom-line {
-        border: 0;
-        border-top: 2px solid black;
-        margin: 10px 0 35px 0;
-    }
-
-    .write-title {
-        text-align: right;
-        font-size: 22px;
-        margin-bottom: 30px;
-    }
-
-    form {
-        width: 100%;
-    }
-
-    .field {
-        margin-bottom: 24px;
-    }
-
-    label {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        font-size: 14px;
-    }
-
-    input,
-    textarea {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 6px;
-
-        font-size: 16px;
-
-        color: black;
-        background: white;
-
-        border: 1px solid black;
-        border-radius: 0;
-        outline: none;
-    }
-
-    textarea {
-        height: 120px;
-        resize: vertical;
-    }
-
-    .submit-area {
-        text-align: right;
-        margin-top: 5px;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 4px 14px;
-
-        color: black;
-        background: white;
-
-        border: 1px solid black;
-        border-radius: 0;
-
-        cursor: pointer;
-    }
-
-    #status {
-        margin-top: 12px;
-        text-align: right;
-        font-size: 14px;
-    }
-
-    .footer {
-        margin-top: 70px;
-        padding-bottom: 30px;
-        text-align: right;
-        font-size: 14px;
-    }
-
-    .footer a {
-        color: black;
-        text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
+    <style>
         body {
-            margin: 20px;
+            text-align: right;
+        }
+
+        a {
+            color: black;
         }
 
         main {
-            width: 100%;
+            width: 700px;
+            max-width: 100%;
+            margin-left: auto;
         }
 
-        h1 {
-            font-size: 36px;
+        .post {
+            margin-bottom: 40px;
         }
-    }
-</style>
+
+        .post-header {
+            margin-bottom: 10px;
+        }
+
+        .post-message {
+            white-space: pre-wrap;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid black;
+            margin: 30px 0;
+        }
+
+        form {
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+        }
+
+        input,
+        textarea {
+            font: inherit;
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            font: inherit;
+        }
+    </style>
 </head>
-
 
 <body>
 
 <main>
 
+    <section>
 
-  <h1>掲示板</h1>
+        <h1>BBS</h1>
 
-  <hr class="top-line">
+        <div id="posts">
+            loading...
+        </div>
 
-
-  <div id="posts">
-    loading...
-  </div>
-
-
-  <hr class="bottom-line">
+    </section>
 
 
-  <div class="write-title">
-    Post
-  </div>
+    <hr>
 
 
-  <form id="form">
+    <section>
+
+        <h2>Post</h2>
+
+        <form id="form">
+
+            <p>
+                <label for="name">name</label>
+                <input
+                    id="name"
+                    type="text"
+                    maxlength="40"
+                    required
+                >
+            </p>
+
+            <p>
+                <label for="message">message</label>
+                <textarea
+                    id="message"
+                    maxlength="1000"
+                    required
+                ></textarea>
+            </p>
+
+            <p>
+                <button type="submit">post</button>
+            </p>
+
+            <div id="status"></div>
+
+        </form>
+
+    </section>
 
 
-    <div class="field">
-
-      <label for="name">
-        <span>name</span>
-        <span>required</span>
-      </label>
-
-      <input
-        id="name"
-        type="text"
-        maxlength="40"
-        required
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label for="message">
-        <span>message</span>
-        <span>required</span>
-      </label>
-
-      <textarea
-        id="message"
-        maxlength="1000"
-        required
-      ></textarea>
-
-    </div>
-
-
-    <div class="submit-area">
-
-      <button type="submit">
-        post
-      </button>
-
-    </div>
-
-
-    <div id="status"></div>
-
-
-  </form>
-
-
-  <div class="footer">
-
-    <a href="../index.html">home</a>
-    &nbsp;/&nbsp;
-    <a href="../photos/index.html">photos</a>
-    &nbsp;/&nbsp;
-    <a href="../blog/index.html">blog</a>
-
-  </div>
-
+    <p>
+        <a href="../index.html">back to home</a>
+    </p>
 
 </main>
 
@@ -270,263 +129,246 @@
 <script>
 
 const SUPABASE_URL =
-  "https://kfxyrujmhaygjzptknsm.supabase.co";
+    "https://kfxyrujmhaygjzptknsm.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_JaFVAjTvi4r0hIFNRvZWYA_c5xz7lXQ";
+    "sb_publishable_JaFVAjTvi4r0hIFNRvZWYA_c5xz7lXQ";
 
 
 async function loadPosts() {
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.asc`,
-    {
-      method: "GET",
+    const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.asc`,
+        {
+            method: "GET",
 
-      headers: {
-        "apikey": SUPABASE_PUBLISHABLE_KEY
-      }
+            headers: {
+                "apikey": SUPABASE_PUBLISHABLE_KEY
+            }
+        }
+    );
+
+
+    if (!response.ok) {
+
+        const errorText =
+            await response.text();
+
+        throw new Error(errorText);
     }
-  );
 
 
-  if (!response.ok) {
-
-    const errorText =
-      await response.text();
-
-    throw new Error(errorText);
-  }
+    const posts =
+        await response.json();
 
 
-  const posts =
-    await response.json();
+    const container =
+        document.getElementById("posts");
 
 
-  const container =
-    document.getElementById("posts");
+    if (posts.length === 0) {
+
+        container.textContent =
+            "no posts yet.";
+
+        return;
+    }
 
 
-  if (posts.length === 0) {
+    container.innerHTML =
+        posts.map((post, index) => {
 
-    container.textContent =
-      "no posts yet.";
-
-    return;
-  }
+            const date =
+                new Date(post.created_at);
 
 
-  container.innerHTML =
-    posts.map((post, index) => {
-
-      const date =
-        new Date(post.created_at);
-
-
-      const dateString =
-        date.getFullYear() +
-        "." +
-        String(
-          date.getMonth() + 1
-        ).padStart(2, "0") +
-        "." +
-        String(
-          date.getDate()
-        ).padStart(2, "0");
+            const dateString =
+                date.getFullYear() +
+                "." +
+                String(
+                    date.getMonth() + 1
+                ).padStart(2, "0") +
+                "." +
+                String(
+                    date.getDate()
+                ).padStart(2, "0");
 
 
-      const timeString =
-        String(
-          date.getHours()
-        ).padStart(2, "0") +
-        ":" +
-        String(
-          date.getMinutes()
-        ).padStart(2, "0");
+            const timeString =
+                String(
+                    date.getHours()
+                ).padStart(2, "0") +
+                ":" +
+                String(
+                    date.getMinutes()
+                ).padStart(2, "0");
 
 
-      const number =
-        String(index + 1).padStart(3, "0");
+            return `
+                <div class="post">
 
+                    <div class="post-header">
+                        ${String(index + 1).padStart(3, "0")}.
+                        ${escapeHTML(post.name)}
+                        -
+                        ${dateString}
+                        ${timeString}
+                    </div>
 
-      return `
+                    <div class="post-message">
+                        ${escapeHTML(post.message)}
+                    </div>
 
-        <div class="post">
+                </div>
+            `;
 
-          <div class="post-number">
-            ${number}.
-          </div>
-
-
-          <div class="post-header">
-
-            <div class="post-name">
-              ${escapeHTML(post.name)}
-            </div>
-
-            <div class="post-date">
-              ${dateString} ${timeString}
-            </div>
-
-          </div>
-
-
-          <div class="post-message">
-            ${escapeHTML(post.message)}
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
+        }).join("");
 }
 
 
 
 document
-  .getElementById("form")
-  .addEventListener(
-    "submit",
-    async function(event) {
+    .getElementById("form")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-      event.preventDefault();
-
-
-      const name =
-        document
-          .getElementById("name")
-          .value
-          .trim();
+            event.preventDefault();
 
 
-      const message =
-        document
-          .getElementById("message")
-          .value
-          .trim();
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
 
 
-      const status =
-        document.getElementById("status");
+            const message =
+                document
+                    .getElementById("message")
+                    .value
+                    .trim();
 
 
-      if (!name || !message) {
-        return;
-      }
+            const status =
+                document.getElementById("status");
 
 
-      status.textContent =
-        "posting...";
-
-
-      try {
-
-        const response =
-          await fetch(
-            `${SUPABASE_URL}/rest/v1/posts`,
-            {
-              method: "POST",
-
-              headers: {
-                "apikey":
-                  SUPABASE_PUBLISHABLE_KEY,
-
-                "Content-Type":
-                  "application/json",
-
-                "Prefer":
-                  "return=minimal"
-              },
-
-              body: JSON.stringify({
-                name: name,
-                message: message
-              })
+            if (!name || !message) {
+                return;
             }
-          );
 
 
-        if (!response.ok) {
+            status.textContent =
+                "posting...";
 
-          const errorText =
-            await response.text();
 
-          console.error(
-            "POST ERROR:",
-            response.status,
-            errorText
-          );
+            try {
 
-          throw new Error(errorText);
+                const response =
+                    await fetch(
+                        `${SUPABASE_URL}/rest/v1/posts`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "apikey":
+                                    SUPABASE_PUBLISHABLE_KEY,
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Prefer":
+                                    "return=minimal"
+                            },
+
+                            body: JSON.stringify({
+                                name: name,
+                                message: message
+                            })
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    console.error(
+                        "POST ERROR:",
+                        response.status,
+                        errorText
+                    );
+
+                    throw new Error(errorText);
+                }
+
+
+                document
+                    .getElementById("form")
+                    .reset();
+
+
+                status.textContent =
+                    "";
+
+
+                await loadPosts();
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "POST ERROR:",
+                    error
+                );
+
+
+                status.textContent =
+                    "could not post.";
+
+            }
+
         }
-
-
-        document
-          .getElementById("form")
-          .reset();
-
-
-        status.textContent =
-          "";
-
-
-        await loadPosts();
-
-      }
-
-
-      catch (error) {
-
-        console.error(
-          "POST ERROR:",
-          error
-        );
-
-
-        status.textContent =
-          "could not post.";
-
-      }
-
-    }
-  );
+    );
 
 
 
 function escapeHTML(text) {
 
-  const div =
-    document.createElement("div");
+    const div =
+        document.createElement("div");
 
 
-  div.textContent =
-    text;
+    div.textContent =
+        text;
 
 
-  return div.innerHTML;
+    return div.innerHTML;
 }
 
 
 
 loadPosts()
-  .catch(error => {
+    .catch(error => {
 
-    console.error(
-      "GET ERROR:",
-      error
-    );
+        console.error(
+            "GET ERROR:",
+            error
+        );
 
 
-    document
-      .getElementById("posts")
-      .textContent =
-        "could not load posts.";
+        document
+            .getElementById("posts")
+            .textContent =
+                "could not load posts.";
 
-  });
+    });
 
 </script>
-
 
 </body>
 </html>
